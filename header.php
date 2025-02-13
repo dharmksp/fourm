@@ -65,12 +65,24 @@ $logo_url = get_option('option_plugin_logo_url', get_template_directory_uri() . 
                 <p class="logo-heading"><?php echo (get_theme_mod('logo_text', '')); ?></p>
               </div>
               <ul class="navbar">
-                <li class="nav-items active">Home</li>
-                <li class="nav-items">About</li>
-                <li class="nav-items">Architecture
+              
+              <li class="nav-items ">
+                  <a class ="nav-links <?php echo (is_front_page() || is_home()) ? 'active' : ''; ?>"  href="<?php echo home_url(); ?>">Home</a></li>
+                  <li class="nav-items <?php if (is_page(array('our-story', 'team'))) echo 'active'; ?>">About
+    <ul class="submenu">
+        <li><a href="http://localhost/fourm/our-story/">Our Story</a></li>
+        <li><a href="http://localhost/fourm/team/">Team</a></li>
+    </ul>
+</li>
+
+                <li class="nav-items     <?php 
+    if (is_tax('project_category', array('offices', 'residential', 'institutional')) || 
+        (is_singular('projects') && has_term('offices', 'project_category'))
+    ) echo 'active'; 
+    ?>">Architecture
                       <ul class="submenu">
                         
-                          <li><a href="http://localhost/fourm/project_category/offices/">Offices</a></li>
+                          <li ><a href="http://localhost/fourm/project_category/offices/">Offices</a></li>
                           <li><a href="http://localhost/fourm/project_category/residential/">Residential</a></li>
                           <li><a href="http://localhost/fourm/project_category/institutional/">Institutional</a></li>
                       </ul></li>
@@ -84,11 +96,12 @@ $logo_url = get_option('option_plugin_logo_url', get_template_directory_uri() . 
                       </ul></li>
                
                 <li class="nav-items">Art</li>
-                <li ><a class="nav-items" href="http://localhost/fourm/blog/">Blog</a></li>
-                <li class="nav-items">With the Master</li>
+                <li class="nav-items" ><a class="nav-links <?php if (is_page('blog')) echo 'active'; ?>" href="http://localhost/fourm/blog/">Blog</a></li>
+                <li class="nav-items"><a class="nav-links <?php if (is_page('blog')) echo 'active'; ?>" href="<?php echo get_site_url()?>/with-the-master">With the Master</a></li>
                 <li class="nav-items">Awards</li>
                 <li class="nav-items">
-                  <button class="primary-button box-shadow-none">Contact Us</button>
+                  <button class="primary-button box-shadow-none"><a style="text-decoration: none;    font-weight: 500;
+    color: #ffffff;" href="<?php echo esc_url(home_url('/contact-us/')); ?>">Contact Us </a></button>
                 </li>
               </ul>
               <div class="burgerMenu" id="burgerMenu">

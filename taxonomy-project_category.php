@@ -27,7 +27,7 @@
         
         <?php the_post_thumbnail('medium'); ?>
           <div class="blur-div">
-            <p><?php the_title(); ?></p>
+            <p><?php echo mb_strimwidth(get_the_title(), 0, 15, '');?></p>
             <span><a href="<?php the_permalink(); ?>" style="text-decoration: none; color:#fff; font-size: 14px;
     line-height: 17px;
     font-weight: 500;" >View project</a></span>

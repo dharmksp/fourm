@@ -16,8 +16,8 @@
 
           <div class="bottom-foot">
             <div class="div1">
-              <h4 class="div1-heading m-0 mb-20">OUR SPACES FURTHER ENHANCES </h4>
-              <p class="div1-text m-0 mb-30">at forumadvaita the natural sunlight is used to render the spaces within. such spaces satisfy psychological and physical function of a space and offer memories.spaces under the influence of natural sunlight give a very theatrical experience to the user and eventually become one with the spac</p>
+              <h4 class="div1-heading m-0 mb-20"><?php echo get_theme_mod('footer_text1');?></h4>
+              <p class="div1-text m-0 mb-30"><?php echo get_theme_mod('footer_textarea');?></p>
 
               <div class="logo-container-desktop mb-20">
                 <div class="logo1">
@@ -74,17 +74,17 @@
               <h4 class="m-0 mb-20">Contact us</h4>
               <div class="info">
                 <img src="<?php echo get_template_directory_uri() ?>/image/Call.svg" alt="">
-                <p class="m-0 mb-20">+91-7087647223</p>
+                <p class="m-0 mb-20"><?php echo get_theme_mod('footer_phone');?></p>
               </div>
               <div class="info">
                 <img src="<?php echo get_template_directory_uri() ?>/image/Message.svg" alt="">
-                <p class="m-0 mb-20">infoforumadvaita.com</p>
+                <p class="m-0 mb-20"><?php echo get_theme_mod('footer_email');?></p>
               </div>
               <div class="info">
                 <img src="<?php echo get_template_directory_uri() ?>/image/Location.svg" alt="">
-                <p class="m-0 mb-20">2475, Sector 71, Sahibzada Ajit Singh Nagar, Punjab 160071, India </p>
+                <p class="m-0 mb-20"><?php echo get_theme_mod('footer_address');?></p>
               </div>
-              <h5 class="m-0 m-20">10am—6pm</h5>
+              <h5 class="m-0 m-20"><?php echo get_theme_mod('footer_time');?></h5>
               <p>/ Everyday</p>
             </div>
 
@@ -161,6 +161,45 @@ window.addEventListener("message", function(event) {
         });
       });
     </script>
+
+<script>
+
+$(document).ready(function() {
+  let images = ["image/Group 37219 (1).svg", "image/Group 37219 (1).svg", "image/Group 37219 (1).svg"];
+  let currentIndex = 0;
+
+  $(".clickable-image").click(function() {
+      currentIndex = $(this).data("index");
+      $("#carousel-image").attr("src", images[currentIndex]);
+      $("#carouselModal").fadeIn();
+  });
+
+  $(".close").click(function() {
+      $("#carouselModal").fadeOut();
+  });
+
+  $("#prev").click(function() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      $("#carousel-image").fadeOut(200, function() {
+          $(this).attr("src", images[currentIndex]).fadeIn(200);
+      });
+  });
+
+  $("#next").click(function() {
+      currentIndex = (currentIndex + 1) % images.length;
+      $("#carousel-image").fadeOut(200, function() {
+          $(this).attr("src", images[currentIndex]).fadeIn(200);
+      });
+  });
+
+  $(document).keydown(function(e) {
+      if (e.key === "ArrowLeft") $("#prev").click();
+      if (e.key === "ArrowRight") $("#next").click();
+      if (e.key === "Escape") $(".close").click();
+  });
+});
+
+</script>
 	<?php wp_footer();?>
 </body>
 </html>
