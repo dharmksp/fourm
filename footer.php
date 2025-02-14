@@ -9,7 +9,7 @@
               <p class="m-0 help-text">We will provide detailed information about our services, types of work, and top projects. We will calculate the cost and prepare a commercial proposal.</p>
             </div>
             <div class="consult">
-              <p class="m-0 p-consult">Get consultation</p>
+              <a href="<?php echo site_url('/contact-us');?>"><p class="m-0 p-consult">Get consultation</p></a>
               <img src="<?php echo get_template_directory_uri() ?>/image/Vector (13).svg" alt="">
             </div>
           </div>

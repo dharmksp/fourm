@@ -140,7 +140,7 @@ get_header();
         <div class="gallery gallery<?php echo $index + 1; ?>">
            
                 <div class="img-div">
-                    <img src="<?php echo esc_url($image_url); ?>" alt="" class="clickable-image" data-index="<?php echo $index; ?>">
+                    <img src="<?php echo esc_url($image_url); ?>" alt="" class="clickable-image" data-index="0">
                 </div>
             
             <div class="text-div">
@@ -152,48 +152,57 @@ get_header();
         </div>
     <?php endforeach; ?>
     <!-- Modal for Image Carousel -->
-<div id="carouselModal" class="modal" style="display: none;">
-    <div class="close">
-        <span class="close-icon">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/Vector (17).svg" alt="">
-        </span>
-    </div>
-    <div class="carousel-container">
-        <div class="carousel">
-            <img id="carousel-image" src="" class="p-rel">
-            <div class="arrow-container">
-                <div id="prev">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/Arrow - Left1.svg" alt="">
-                </div>
-                <div id="next">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/Arrow - right.svg" alt="">
-                </div>
+    <div id="carouselModal" class="modal">
+            <div class="close">
+              <span class="close-icon">
+                <img src="image/Vector (17).svg" alt="">
+              </span>
             </div>
-            <div class="imges">
-                <p>Total Images</p>
-                <img src="<?php echo get_template_directory_uri(); ?>/image/gallery-img.svg" alt=""> 
-                <p><?php echo esc_html($total_images); ?></p>
-            </div>
-            <div class="like-share-div">
-                <div class="heart">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/Heart.svg" alt="" class="heart1">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/Heart1.svg" alt="" class="heart2">
+            <div class="carousel-container">
+              <div class="carousel">
+                <img id="carousel-image" src="" class="p-rel">
+                  
+                <div class="arrow-container">
+                  <div id="prev">
+                    <img src="image/Arrow - Left1.svg" alt="">
+                  </div>
+              
+                  <div id="next">
+                    <img src="image/Arrow - right.svg" alt="">
+                  </div>
+                </div>
+            
+                <div class="imges">
+                  <p>Total Images</p>
+                  <img src="image/gallery-img.svg" alt=""> 
+                  <p>72</p>
+                </div>
+                  
+                <div class="like-share-div">
+                  <div class="heart">
+                    <img src="image/Heart.svg" alt="" class="heart1">
+                    <img src="image/Heart1.svg" alt="" class="heart2">
                     <p>Like</p>
-                </div>
-                <div class="share">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/Send.svg" alt="" class="send1">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/Send1.svg" alt="" class="send2">
+                  </div>
+                  <div class="share">
+                    <img src="image/Send.svg" alt="" class="send1">
+                    <img src="image/Send1.svg" alt="" class="send2">
                     <p>Share</p>
+                  </div>
                 </div>
+              </div>
+              
+              <div class="multiple-carousel-img mt-20">
+                <img src="image/image (33).svg" alt="">
+                <img src="image/image (32).svg" alt="">
+                <img src="image/image.png" alt="">
+                <img src="image/image (33).svg" alt="">
+                <img src="image/image (32).svg" alt="">
+                <img src="image/image.png" alt="">
+                <img src="image/image (33).svg" alt="">
+              </div>
             </div>
         </div>
-        <div class="multiple-carousel-img mt-20">
-            <?php foreach ($gallery_images as $image_url): ?>
-                <img src="<?php echo esc_url($image_url); ?>" alt="">
-            <?php endforeach; ?>
-        </div>
-    </div>
-</div>
 </div>
 
 

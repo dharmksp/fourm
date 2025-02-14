@@ -318,3 +318,110 @@ function save_custom_page_images($post_id) {
     }
 }
 add_action('save_post', 'save_custom_page_images');
+function create_contact_form_table() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'contact_form';
+
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        name varchar(255) NOT NULL,
+        email varchar(255) NOT NULL,
+        phone varchar(20) NOT NULL,
+        address text NULL,
+        subject varchar(255) NULL,
+        message text NOT NULL,
+        created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+}
+add_action('after_setup_theme', 'create_contact_form_table');
+
+function handle_contact_form_submission() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'contact_form';
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $name = sanitize_text_field($_POST["user_name"]);
+        $email = sanitize_email($_POST["user_email"]);
+        $phone = sanitize_text_field($_POST["user_phone"]);
+        $address = sanitize_text_field($_POST["user_address"]);
+        $subject = sanitize_text_field($_POST["user_subject"]);
+        $message = sanitize_textarea_field($_POST["user_message"]);
+
+        $wpdb->insert(
+            $table_name,
+            array(
+                'name'    => $name,
+                'email'   => $email,
+                'phone'   => $phone,
+                'address' => $address,
+                'subject' => $subject,
+                'message' => $message,
+            ),
+            array('%s', '%s', '%s', '%s', '%s', '%s')
+        );
+
+        wp_redirect(home_url('/contact-us')); // Redirect to a thank-you page
+        exit();
+    }
+}
+add_action('admin_post_save_contact_form', 'handle_contact_form_submission');
+add_action('admin_post_nopriv_save_contact_form', 'handle_contact_form_submission'); 
+
+
+function contact_form_admin_menu() {
+    add_menu_page(
+        'Contact Form Submissions', // Page title
+        'Contact Messages', // Menu title
+        'manage_options', // Capability
+        'contact-form-submissions', // Menu slug
+        'display_contact_form_submissions', // Function to display the page
+        'dashicons-email', // Icon
+        20 // Position
+    );
+}
+add_action('admin_menu', 'contact_form_admin_menu');
+
+function display_contact_form_submissions() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'contact_form';
+    $messages = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC");
+
+    echo '<div class="wrap"><h1>Contact Form Submissions</h1>';
+    echo '<table class="widefat fixed striped">
+            <thead>
+                <tr>
+                    
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+    if ($messages) {
+        foreach ($messages as $message) {
+            echo '<tr>
+                   
+                    <td>' . esc_html($message->name) . '</td>
+                    <td><a href="mailto:' . esc_html($message->email) . '">' . esc_html($message->email) . '</a></td>
+                    <td>' . esc_html($message->phone) . '</td>
+                    <td>' . esc_html($message->subject) . '</td>
+                    <td>' . esc_html($message->message) . '</td>
+                    <td>' . esc_html($message->created_at) . '</td>
+                </tr>';
+        }
+    } else {
+        echo '<tr><td colspan="7">No messages found.</td></tr>';
+    }
+
+    echo '</tbody></table></div>';
+}
